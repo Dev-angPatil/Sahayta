@@ -1,0 +1,27 @@
+# Python & Virtual Environments
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# Test directories & cache (Excluded as requested)
+tests/
+.pytest_cache/
+
+# Internal Agent & Intermediate Markdown Docs (Excluded as requested)
+VISION.md
+ARCHITECTURE.md
+PROJECT.md
+TEST_INFRA.md
+TEST_READY.md
+ORIGINAL_REQUEST.md
+BHARATAGENTIC_HACKATHON.md
+design.md
+.agents/
+
+# Binary PDFs
+*.pdf
+
+# Packaging & Lock
+uv.lock

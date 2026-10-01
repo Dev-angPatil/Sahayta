@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sahayta — Action-Oriented GovTech AI Agent for Bharat</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <span class="flag-icon">🇮🇳</span>
+        <div class="brand-text">
+          <h1>SAHAYTA <span class="badge-tag">GOVTECH AGENT</span></h1>
+          <p class="subtitle">Action-Oriented Grievance Redressal & Scheme Navigator for Bharat</p>
+        </div>
+      </div>
+      <div class="header-status">
+        <span class="status-indicator"></span>
+        <span class="status-label">Grounded: 56 Ministries • 4 Portals</span>
+      </div>
+    </header>
+
+    <!-- Main Content Workspace -->
+    <main class="main-workspace">
+      <!-- Left Column: Conversational Dialogue -->
+      <section class="conversation-pane">
+        <div class="pane-header">
+          <h2>Citizen Dialogue</h2>
+          <span id="session-badge" class="session-pill">Session: Initializing...</span>
+        </div>
+
+        <!-- Quick Scenario Chips -->
+        <div class="quick-scenarios">
+          <span class="scenarios-label">Try Scenarios:</span>
+          <button class="chip" data-query="IRCTC train 12952 was cancelled on 15 Sept, but my refund of Rs 2,450 has not been received after 16 days. PNR is 2458971234.">🚆 IRCTC Refund (CPGRAMS)</button>
+          <button class="chip" data-query="Varanasi me Savitri Devi, ration card UP202409876543, dealer FPS1042 ne monthly wheat aur rice dene se mana kar diya.">🌾 PDS Ration Denial (State PDS)</button>
+          <button class="chip" data-query="Transformer sparking near main road Indiranagar, Consumer ID BES10492850, live wire dangling.">⚡ Power Hazard (DISCOM)</button>
+          <button class="chip" data-query="I want to file a complaint with the Ministry of Magic about my wand registration.">🚫 Fake Ministry Test</button>
+        </div>
+
+        <!-- Message Stream -->
+        <div id="messages-container" class="messages-stream">
+          <div class="message system-welcome">
+            <div class="message-sender">Sahayta Navigator</div>
+            <div class="message-content">
+              <p>Namaste! I am <strong>Sahayta</strong>, an autonomous GovTech agent designed to help Indian citizens file formal complaints, resolve civic issues, and navigate public welfare schemes across Central and State portals.</p>
+              <p>Describe your issue in plain English, Hindi, or Hinglish. I will triage the right government authority, elicit any missing details, draft a formal petition, and execute the submission.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Area -->
+        <form id="chat-form" class="chat-input-form">
+          <div class="input-wrapper">
+            <textarea id="user-input" placeholder="Type your grievance here (e.g., cancelled train refund, ration denial, power outage)..." rows="2" required></textarea>
+            <button type="submit" id="send-btn" class="btn-primary">
+              <span>Send</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Column: Live Civic Dossier & Formal Petition -->
+      <section class="dossier-pane">
+        <div class="pane-header">
+          <h2>Civic Dossier & Petition</h2>
+          <span id="portal-badge" class="portal-pill neutral">No Portal Mapped</span>
+        </div>
+
+        <!-- Grounded Portal Details -->
+        <div id="portal-details-card" class="dossier-card empty-state">
+          <div class="card-title">Target Portal & Statutory Jurisdiction</div>
+          <p class="empty-hint">State your issue to triage the competent administrative authority.</p>
+          <div id="portal-info-body" class="portal-info hidden">
+            <div class="info-row"><span class="label">Portal:</span> <span id="portal-name" class="val">-</span></div>
+            <div class="info-row"><span class="label">Authority:</span> <span id="portal-auth" class="val">-</span></div>
+            <div class="info-row"><span class="label">Statutory Ground:</span> <span id="portal-statute" class="val">-</span></div>
+          </div>
+        </div>
+
+        <!-- Field Verification Matrix -->
+        <div class="dossier-card">
+          <div class="card-title">Extracted Particulars & Schema Status</div>
+          <div id="fields-matrix" class="fields-list">
+            <p class="empty-hint">Extracted parameters will appear here as you chat.</p>
+          </div>
+        </div>
+
+        <!-- Formal Administrative Petition Draft -->
+        <div id="draft-container" class="dossier-card draft-card hidden">
+          <div class="card-title-flex">
+            <span>Formal Administrative Petition</span>
+            <span class="draft-tag">Article 350 / DARPG Standard</span>
+          </div>
+          <div id="draft-text-preview" class="petition-preview"></div>
+          
+          <div class="draft-actions">
+            <button id="confirm-submit-btn" class="btn-action-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Lodge Grievance & Execute Filing</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Verifiable Receipt Card -->
+        <div id="receipt-card" class="dossier-card receipt-card hidden">
+          <div class="card-title-flex">
+            <span>Official Filing Receipt</span>
+            <span class="verified-badge">VERIFIED</span>
+          </div>
+          <div class="receipt-content">
+            <div class="receipt-row highlight">
+              <span class="lbl">Tracking Reference:</span>
+              <span id="receipt-tracking" class="val mono">-</span>
+            </div>
+            <div class="receipt-row">
+              <span class="lbl">Filing Timestamp:</span>
+              <span id="receipt-time" class="val mono">-</span>
+            </div>
+            <div class="receipt-row">
+              <span class="lbl">Statutory Deadline:</span>
+              <span id="receipt-deadline" class="val highlight-date">-</span>
+            </div>
+            <div class="receipt-row">
+              <span class="lbl">SHA-256 Hash:</span>
+              <span id="receipt-hash" class="val mono truncate">-</span>
+            </div>
+            <div class="receipt-advice" id="receipt-advice"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

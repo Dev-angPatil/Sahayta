@@ -1,0 +1,51 @@
+schema_version: "1.0"
+agent:
+  name: "Sahayta"
+  version: "1.0.0"
+  tagline: "Action-Oriented GovTech AI Agent for Bharat"
+  description: "An autonomous, hallucination-resistant GovTech agent that triages citizen grievances across Central and State portals (CPGRAMS, PDS, DISCOM, Water Board), interactively elicits missing particulars, drafts administrative petitions, and automates submission."
+  author: "Devang Patil"
+  category: "Citizen & GovTech"
+  tags:
+    - govtech
+    - civic-tech
+    - citizen-services
+    - cpgrams
+    - public-distribution-system
+    - anti-hallucination
+
+runtime:
+  framework: "FastAPI"
+  language: "Python 3.11"
+  port: 8000
+  entrypoint: "sahayta.api.app:app"
+
+endpoints:
+  health:
+    path: "/health"
+    method: "GET"
+    description: "Liveness and readiness health probe"
+  chat:
+    path: "/api/v1/agent/chat"
+    method: "POST"
+    description: "Multilingual grievance triage, Gate 0 security screening, and progressive elicitation"
+  submit:
+    path: "/api/v1/agent/submit"
+    method: "POST"
+    description: "Human-in-the-loop verified grievance lodgement and receipt generation"
+  portals:
+    path: "/api/v1/portals"
+    method: "GET"
+    description: "Catalog of grounded Indian civic portals and statutory acts"
+
+capabilities:
+  reasoning:
+    - "Multilingual natural language understanding (English, Hindi, Hinglish)"
+    - "Domain and jurisdiction classification across 56 Union Ministries and State utilities"
+  grounding:
+    - "Zero-hallucination Gate 0 screening for fictional ministries and scam schemes"
+    - "Strict Pydantic v2 schemas with extra='forbid'"
+  action:
+    - "Formal administrative petition drafting (Article 350 / DARPG standard)"
+    - "Human-in-the-loop review and approval gate"
+    - "SHA-256 verifiable cryptographic receipt generation"
