@@ -6,7 +6,7 @@ metadata:
   description: "Autonomous action-oriented GovTech AI Agent for Bharat: triages grievances across Union, State, and Municipal tiers, enforces zero-hallucination guardrails, drafts formal Article 350 petitions, and mints tamper-evident SHA-256 receipts."
 runtime:
   type: docker
-  image: "docker.io/devangpatil/sahayta:1.0.0"
+  image: "docker.io/officialdevangpatil/sahayta:1.0.0"
   command: ["python", "-m", "sahayta.aikart_runner"]
 resources:
   cpu: 1
