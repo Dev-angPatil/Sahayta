@@ -160,10 +160,25 @@ class SahaytaAgent:
         llm_entities = llm_analysis.get("extracted_entities", {})
 
         # Step 4: Handle Conversational Greetings, Introductions, and General Inquiries
-        is_greeting = cleaned_msg.lower() in [
+        msg_lower = cleaned_msg.lower().strip("?!., ")
+        greeting_patterns = [
             "hi", "hello", "hey", "namaste", "namaskar", "help", "who are you",
-            "what can you do", "kaise ho", "kya kar sakte ho", "help me"
-        ] or (
+            "what can you do", "kaise ho", "kya kar sakte ho", "help me", "how does this work",
+            "tell me about yourself", "kya kaam karte ho"
+        ]
+        has_greeting_word = any(
+            msg_lower == p or msg_lower.startswith(f"{p} ") or msg_lower.endswith(f" {p}")
+            or f" {p} " in f" {msg_lower} "
+            for p in ["hi", "hello", "hey", "namaste", "namaskar"]
+        )
+        is_inquiry = any(p in msg_lower for p in ["who are you", "what can you do", "how do you work", "how does this work", "help me", "kaise kaam"])
+        civic_keywords = ["train", "pnr", "ration", "meter", "bijli", "water", "electricity", "bill", "pds", "cpgrams", "refund", "outage"]
+
+        is_greeting = (
+            (msg_lower in greeting_patterns or has_greeting_word or is_inquiry)
+            and len(cleaned_msg.split()) <= 14
+            and not any(civic in msg_lower for civic in civic_keywords)
+        ) or (
             not self.has_active_grievance
             and self.state.current_step == "UNINITIALIZED"
             and llm_intent == "GREETING_OR_INQUIRY"
