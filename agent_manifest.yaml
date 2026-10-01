@@ -7,7 +7,7 @@ metadata:
 runtime:
   type: docker
   image: "docker.io/officialdevangpatil/sahayta:1.0.0"
-  command: ["python", "-m", "sahayta.aikart_runner"]
+  command: ["python", "run.py"]
 resources:
   cpu: 1
   memoryMb: 2048

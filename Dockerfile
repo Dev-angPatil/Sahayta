@@ -5,14 +5,19 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# Ensure Python unbuffered logging & module path resolution
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/app/src
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy build config, documentation, and application source
-COPY pyproject.toml README.md LICENSE ./
+# Copy build config, documentation, universal runner, and application source
+COPY pyproject.toml README.md LICENSE run.py ./
 COPY src/ /app/src/
 
 # Ensure aiKart sandbox execution directory exists
