@@ -25,41 +25,14 @@ Sahayta functions as an active administrative and legal advocate:
 
 ## Agent Decision-Making Flowchart
 
-The following diagram illustrates how Sahayta processes citizen input, enforces security and regulatory guardrails, and drives the complaint from initial intake to verified filing:
-
 ```mermaid
 flowchart TD
-    A[Citizen Input\nEnglish, Hindi, or Hinglish] --> B[Gate 0: Security & Jurisdiction Screener]
-    
-    B -->|Flagged as Scam, Fictitious Entity, or Out-of-Scope| C[Reject & Issue Consumer Protection Advisory\nHTTP 422 - Reference myscheme.gov.in]
-    B -->|Verified Legitimate Grievance| D[Domain & Authority Triage Engine]
-    
-    D --> E{Determine Statutory Jurisdiction}
-    E -->|Union Level| F1[CPGRAMS Gateway\n56 Whitelisted Central Ministries]
-    E -->|Food & Civil Supplies| F2[State PDS Portal\nNFSA 2013 Framework]
-    E -->|Power & Utilities| F3[State DISCOM Forum\nElectricity Act 2003 CGRF]
-    E -->|Urban Infrastructure| F4[Municipal Corporation\nCity Water & Sewerage Board]
-    
-    F1 --> G[Pydantic v2 Schema Validation\nextra='forbid']
-    F2 --> G
-    F3 --> G
-    F4 --> G
-    
-    G --> H{Are Mandatory Particulars Complete?}
-    H -->|Missing Required Fields| I[Dynamic Elicitation State Machine]
-    I --> J[Generate Single Focused Clarification Question]
-    J --> A
-    
-    H -->|All Mandatory Fields Present| K[Article 350 Administrative Petition Synthesizer]
-    K --> L[Generate Structured Legal Petition with Statutory Citations]
-    
-    L --> M{Human-in-the-Loop Confirmation Gate}
-    M -->|Citizen Requests Changes| N[Update Specific Fields] --> G
-    M -->|Citizen Rejects / Cancels| O[Abort Filing Session]
-    M -->|Citizen Confirms Petition| P[Verifiable Submission Engine]
-    
-    P --> Q[Generate Official Tracking ID & Statutory Deadlines]
-    Q --> R[Mint Immutable SHA-256 Integrity Receipt]
+    A[Citizen Grievance\nVernacular Input] --> B{Gate 0 Screener}
+    B -->|Scam or Fictitious Scheme| C[Reject & Issue Official Advisory]
+    B -->|Valid Civic Grievance| D[Portal Triage & Interactive Elicitation]
+    D --> E[Draft Article 350 Legal Petition]
+    E --> F{Citizen Review}
+    F -->|Approved| G[Official Submission & SHA-256 Receipt]
 ```
 
 ---
