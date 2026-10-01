@@ -4,6 +4,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
+.env
+*.env
 
 # Test directories & cache (Excluded as requested)
 tests/
@@ -18,6 +20,7 @@ TEST_READY.md
 ORIGINAL_REQUEST.md
 BHARATAGENTIC_HACKATHON.md
 design.md
+docs/
 .agents/
 
 # Binary PDFs

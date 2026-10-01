@@ -3,136 +3,261 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sahayta — Action-Oriented GovTech AI Agent for Bharat</title>
+  <title>Sahayta — National Civic Grievance Portal</title>
   <link rel="stylesheet" href="/static/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="app-layout">
-    <!-- Top Navigation Header -->
+    <!-- 1. Frosted Shell Header (DESIGN.md) -->
     <header class="app-header">
       <div class="header-brand">
         <span class="flag-icon">🇮🇳</span>
-        <div class="brand-text">
-          <h1>SAHAYTA <span class="badge-tag">GOVTECH AGENT</span></h1>
-          <p class="subtitle">Action-Oriented Grievance Redressal & Scheme Navigator for Bharat</p>
+        <div>
+          <div class="brand-title">SAHAYTA</div>
+          <div class="brand-subtitle">National Civic Grievance Redressal Portal</div>
         </div>
       </div>
-      <div class="header-status">
-        <span class="status-indicator"></span>
-        <span class="status-label">Grounded: 56 Ministries • 4 Portals</span>
-        <button id="new-session-btn" class="btn-new-session" title="Start a fresh session">⟳ New Session</button>
+      <div class="header-controls">
+        <button id="demo-mode-btn" class="btn-demo-mode" title="Run autonomous end-to-end demo showcase">▶ Auto Demo</button>
+        <button id="tts-toggle-btn" class="btn-header-tool active" title="Toggle voice audio readout">🔊 TTS</button>
+        <button id="new-session-btn" class="btn-new-session" title="Start a new grievance filing">⟳ New Filing</button>
       </div>
     </header>
 
-    <!-- Main Content Workspace -->
+    <!-- 2. Filing Progress Stepper -->
+    <nav class="workflow-stepper-bar" aria-label="Grievance Filing Progress">
+      <div class="stepper-track">
+        <div class="stepper-node active" id="step-triage">
+          <span class="step-num">1</span>
+          <span class="step-title">Intake</span>
+        </div>
+        <div class="stepper-line" id="conn-1"></div>
+        <div class="stepper-node" id="step-elicitation">
+          <span class="step-num">2</span>
+          <span class="step-title">Details</span>
+        </div>
+        <div class="stepper-line" id="conn-2"></div>
+        <div class="stepper-node" id="step-drafting">
+          <span class="step-num">3</span>
+          <span class="step-title">Petition</span>
+        </div>
+        <div class="stepper-line" id="conn-3"></div>
+        <div class="stepper-node" id="step-hitl">
+          <span class="step-num">4</span>
+          <span class="step-title">Review</span>
+        </div>
+        <div class="stepper-line" id="conn-4"></div>
+        <div class="stepper-node" id="step-submission">
+          <span class="step-num">5</span>
+          <span class="step-title">Docket</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Demo Mode Active Status Bar -->
+    <div id="demo-banner" class="demo-banner hidden">
+      <div class="demo-banner-content">
+        <span class="demo-pulse-orb"></span>
+        <span id="demo-step-text" class="demo-step-text">Auto Demo Active: Showcasing full autonomous grievance lifecycle...</span>
+      </div>
+      <button type="button" id="btn-stop-demo" class="btn-stop-demo" title="Stop automated demo">✕ Stop Demo</button>
+    </div>
+
+    <!-- 3. Main Workspace Split Layout -->
     <main class="main-workspace">
-      <!-- Left Column: Conversational Dialogue -->
-      <section class="conversation-pane">
+      <!-- Left Column: Citizen Dialogue & Voice Assistant -->
+      <section class="dialogue-pane">
         <div class="pane-header">
-          <h2>Citizen Dialogue</h2>
-          <span id="session-badge" class="session-pill">Session: Initializing...</span>
+          <div class="pane-title">
+            <span class="pane-dot"></span>
+            <span>Citizen Assistant</span>
+          </div>
+          <span id="session-badge" class="session-pill">Session: Active</span>
         </div>
 
-        <!-- Message Stream -->
         <div id="messages-container" class="messages-stream">
-          <div class="message system-welcome">
-            <div class="message-sender">Sahayta Navigator</div>
-            <div class="message-content">
-              <p>Namaste! I am <strong>Sahayta</strong>, an autonomous GovTech agent designed to help Indian citizens file formal complaints, resolve civic issues, and navigate public welfare schemes across Central and State portals.</p>
-              <p>Describe your issue in plain English, Hindi, or Hinglish. You can type or use the <strong>Voice</strong> button to speak. I will triage the right government authority, elicit any missing details, draft a formal petition, and execute the submission.</p>
+          <div class="message msg-system">
+            <div class="system-welcome-card">
+              <div class="welcome-header">
+                <span class="welcome-icon">🏛️</span>
+                <div>
+                  <strong>Namaste! Welcome to Sahayta</strong>
+                  <div class="welcome-sub">Integrated Civic Grievance Redressal Portal</div>
+                </div>
+              </div>
+              <p class="welcome-text">
+                File official complaints for Railways, Ration (PDS), Electricity, Water supply, and Municipal services. 
+                Type or speak in Hindi, English, or Hinglish to prepare your official grievance.
+              </p>
             </div>
           </div>
         </div>
 
-        <!-- Input Area -->
+        <!-- Small text below showing thinking process -->
+        <div id="thinking-process-bar" class="thinking-process-bar hidden">
+          <div class="thinking-pulse-dot"></div>
+          <div class="thinking-bar-text-group">
+            <span id="thinking-bar-step" class="thinking-bar-step">Processing grievance details...</span>
+          </div>
+          <span id="thinking-bar-elapsed" class="thinking-bar-elapsed">0.0s</span>
+        </div>
+
         <form id="chat-form" class="chat-input-form">
-          <div class="input-wrapper">
-            <textarea id="user-input" placeholder="Type or speak your grievance (e.g., cancelled train refund, ration denial, power outage)..." rows="2" required></textarea>
-            <button type="button" id="voice-btn" class="btn-voice" title="Voice Input (Speak in Hindi or English)">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                <line x1="12" y1="19" x2="12" y2="22"></line>
-              </svg>
-              <span id="voice-label">Voice</span>
-            </button>
-            <button type="submit" id="send-btn" class="btn-primary">
-              <span>Send</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-            </button>
+          <div class="input-container">
+            <textarea id="user-input" placeholder="Speak or type your complaint (Hindi, English, or Hinglish)..." rows="2" required></textarea>
+            <div class="input-actions">
+              <button type="button" id="voice-btn" class="btn-voice" title="Voice Input (Press Space or Click to speak)">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12" y2="22"></line>
+                </svg>
+                <span id="voice-label">Voice</span>
+                <span class="space-kbd-hint">Space</span>
+              </button>
+              <button type="submit" id="send-btn" class="btn-send">
+                <span>Send</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </div>
           </div>
         </form>
       </section>
 
-      <!-- Right Column: Live Civic Dossier & Formal Petition -->
-      <section class="dossier-pane">
-        <div class="pane-header">
-          <h2>Civic Dossier & Petition</h2>
-          <span id="portal-badge" class="portal-pill neutral">No Portal Mapped</span>
-        </div>
-
-        <!-- Grounded Portal Details -->
-        <div id="portal-details-card" class="dossier-card empty-state">
-          <div class="card-title">Target Portal & Statutory Jurisdiction</div>
-          <p class="empty-hint">State your issue to triage the competent administrative authority.</p>
-          <div id="portal-info-body" class="portal-info hidden">
-            <div class="info-row"><span class="label">Portal:</span> <span id="portal-name" class="val">-</span></div>
-            <div class="info-row"><span class="label">Authority:</span> <span id="portal-auth" class="val">-</span></div>
-            <div class="info-row"><span class="label">Statutory Ground:</span> <span id="portal-statute" class="val">-</span></div>
+      <!-- Right Column: Official Portal Form & Petition -->
+      <section class="sandbox-pane">
+        <div class="sandbox-header">
+          <div class="sandbox-header-left">
+            <span class="live-dot"></span>
+            <div class="portal-identity">
+              <span class="portal-badge" id="portal-tier-tag">GOVERNMENT PORTAL GATEWAY</span>
+              <span id="portal-url" class="portal-url-text">https://pgportal.gov.in/Grievance/NewFiling</span>
+            </div>
           </div>
-        </div>
-
-        <!-- Field Verification Matrix -->
-        <div class="dossier-card">
-          <div class="card-title">Extracted Particulars & Schema Status</div>
-          <div id="fields-matrix" class="fields-list">
-            <p class="empty-hint">Extracted parameters will appear here as you chat.</p>
+          <div class="tab-nav">
+            <button id="tab-form-btn" class="tab-btn active">Live Portal Form</button>
+            <button id="tab-petition-btn" class="tab-btn">Article 350 Petition</button>
           </div>
         </div>
 
-        <!-- Formal Administrative Petition Draft -->
-        <div id="draft-container" class="dossier-card draft-card hidden">
-          <div class="card-title-flex">
-            <span>Formal Administrative Petition</span>
-            <span class="draft-tag">Article 350 / DARPG Standard</span>
+        <div class="sandbox-content">
+          <!-- Authority & Jurisdiction Card -->
+          <div id="authority-card" class="authority-card">
+            <div class="authority-title">
+              <div class="authority-badges">
+                <span id="tier-badge" class="tier-badge">Awaiting Intake</span>
+                <span id="sla-badge" class="sla-badge">SLA: Pending</span>
+              </div>
+            </div>
+            <div id="authority-name" class="authority-name">Central Grievance Redressal (CPGRAMS)</div>
+            <div class="authority-meta">
+              <div class="meta-item"><span class="lbl">Statute</span> <span id="meta-statute" class="val">-</span></div>
+              <div class="meta-item"><span class="lbl">Nodal Department</span> <span id="meta-nodal" class="val">-</span></div>
+              <div class="meta-item"><span class="lbl">Competent Officer</span> <span id="meta-officer" class="val">-</span></div>
+              <div class="meta-item"><span class="lbl">Appellate Officer</span> <span id="meta-appeal" class="val">-</span></div>
+            </div>
           </div>
-          <div id="draft-text-preview" class="petition-preview"></div>
-          
-          <div class="draft-actions">
-            <button id="confirm-submit-btn" class="btn-action-primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Lodge Grievance & Execute Filing</span>
-            </button>
-          </div>
-        </div>
 
-        <!-- Verifiable Receipt Card -->
-        <div id="receipt-card" class="dossier-card receipt-card hidden">
-          <div class="card-title-flex">
-            <span>Official Filing Receipt</span>
-            <span class="verified-badge">VERIFIED</span>
+          <!-- Tab 1: Live Interactive Portal Form -->
+          <div id="portal-form-view" class="portal-form-card">
+            <div class="form-header-tag">
+              <div class="form-tag-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+                <span>Official Grievance Registration Form</span>
+              </div>
+              <span class="schema-pill" id="form-schema-tag">CPGRAMS</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label">Complainant Full Legal Name</label>
+                <input type="text" id="field-name" class="form-input" placeholder="Awaiting extraction..." readonly>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Contact Mobile Number</label>
+                <input type="text" id="field-mobile" class="form-input" placeholder="10-digit mobile number..." readonly>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Email Address (Receipt Dispatch)</label>
+                <input type="text" id="field-email" class="form-input" placeholder="citizen@domain.gov.in..." readonly>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">State & District Jurisdiction</label>
+                <input type="text" id="field-location" class="form-input" placeholder="State / District..." readonly>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label" id="label-identifier">Regulatory Token (PNR / CA / Ration #)</label>
+                <input type="text" id="field-identifier" class="form-input" placeholder="Key regulatory identifier..." readonly>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Competent Department / Utility</label>
+                <input type="text" id="field-department" class="form-input" placeholder="Awaiting sovereign routing..." readonly>
+              </div>
+
+              <div class="form-field full-width">
+                <label class="form-label">Grievance Category / Cause of Action</label>
+                <input type="text" id="field-category" class="form-input" placeholder="Subject matter category..." readonly>
+              </div>
+
+              <div class="form-field full-width">
+                <label class="form-label">Factual Statement of Injury</label>
+                <textarea id="field-description" class="form-input" rows="3" placeholder="Factual grievance statements extracted from citizen dialogue..." readonly></textarea>
+              </div>
+            </div>
+
+            <div id="submit-action-box" class="form-field full-width hidden">
+              <button id="btn-lodge-filing" class="btn-confirm-action">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Confirm & Lodge Official Grievance</span>
+              </button>
+            </div>
           </div>
-          <div class="receipt-content">
-            <div class="receipt-row highlight">
-              <span class="lbl">Tracking Reference:</span>
-              <span id="receipt-tracking" class="val mono">-</span>
+
+          <!-- Tab 2: Article 350 Formal Legal Petition -->
+          <div id="petition-view" class="petition-container hidden">
+            <div class="petition-title">
+              <div>
+                <strong>Formal Administrative Petition</strong>
+                <div class="petition-subtitle">Synthesized in adherence to Article 350 of the Constitution of India</div>
+              </div>
+              <span class="badge-tag" style="background:#eff6ff; color:#2563eb;">Article 350 Compliant</span>
             </div>
-            <div class="receipt-row">
-              <span class="lbl">Filing Timestamp:</span>
-              <span id="receipt-time" class="val mono">-</span>
+            <div id="petition-text-box" class="petition-preview-box">Awaiting complete particulars to synthesize petition...</div>
+          </div>
+
+          <!-- Verifiable Filing Docket -->
+          <div id="docket-card" class="docket-card hidden">
+            <div class="docket-header">
+              <div class="docket-header-title">
+                <span class="docket-check">✓</span>
+                <strong style="color:var(--success); font-size:1.05rem;">Official Filing Docket Issued</strong>
+              </div>
+              <span class="docket-badge">VERIFIED SUBMISSION</span>
             </div>
-            <div class="receipt-row">
-              <span class="lbl">Statutory Deadline:</span>
-              <span id="receipt-deadline" class="val highlight-date">-</span>
+            <div class="docket-row highlight">
+              <span>Tracking Reference Number:</span>
+              <span id="docket-tracking" class="mono">-</span>
             </div>
-            <div class="receipt-row">
-              <span class="lbl">SHA-256 Hash:</span>
-              <span id="receipt-hash" class="val mono truncate">-</span>
+            <div class="docket-row">
+              <span>Filing Timestamp (UTC):</span>
+              <span id="docket-time" class="mono">-</span>
             </div>
-            <div class="receipt-advice" id="receipt-advice"></div>
+            <div class="docket-row">
+              <span>Statutory Redressal Deadline:</span>
+              <span id="docket-deadline" class="mono" style="color:var(--primary); font-weight:700;">-</span>
+            </div>
+            <div class="docket-row">
+              <span>Tamper-Evident SHA-256 Hash:</span>
+              <span id="docket-hash" class="mono hash-text">-</span>
+            </div>
+            <div id="docket-advice" class="docket-advice"></div>
           </div>
         </div>
       </section>

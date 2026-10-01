@@ -194,11 +194,18 @@ curl -X POST http://localhost:8000/api/v1/agent/submit \
 
 ## 📦 Hackathon Submission Artifacts
 
-1. **Agent Manifest (Method 1):** [`agent_manifest.yaml`](./agent_manifest.yaml)
-2. **Container Dockerfile (Method 1):** [`Dockerfile`](./Dockerfile)
-3. **Interactive Swagger Docs (Method 2):** Accessible at `http://localhost:8000/docs`
+1. **aiKart Agent Manifest (Method 1 — `aikart.dev/v1`):** [`agent_manifest.yaml`](./agent_manifest.yaml)
+2. **aiKart "Try Me Now" Sandbox Runner:**
+   ```bash
+   # Executes the headless agentic pipeline and produces /aikart/output.json
+   python -m sahayta.aikart_runner
+   ```
+3. **Container Dockerfile (Method 1):** [`Dockerfile`](./Dockerfile)
+4. **Interactive Swagger Docs (Method 2):** Accessible at `http://localhost:8000/docs`
+5. **Design System Specification:** [`DESIGN.md`](./DESIGN.md) (Curated Command Center design system imported via `designmd.ai`)
 
 ---
 
 ## 📄 License
 This project is licensed under the Apache 2.0 License — see the [LICENSE](LICENSE) file for details.
+
