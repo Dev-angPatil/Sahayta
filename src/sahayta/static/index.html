@@ -36,22 +36,13 @@
           <span id="session-badge" class="session-pill">Session: Initializing...</span>
         </div>
 
-        <!-- Quick Scenario Chips -->
-        <div class="quick-scenarios">
-          <span class="scenarios-label">Try Scenarios:</span>
-          <button class="chip" data-query="IRCTC train 12952 was cancelled on 15 Sept, but my refund of Rs 2,450 has not been received after 16 days. PNR is 2458971234.">🚆 IRCTC Refund (CPGRAMS)</button>
-          <button class="chip" data-query="Varanasi me Savitri Devi, ration card UP202409876543, dealer FPS1042 ne monthly wheat aur rice dene se mana kar diya.">🌾 PDS Ration Denial (State PDS)</button>
-          <button class="chip" data-query="Transformer sparking near main road Indiranagar, Consumer ID BES10492850, live wire dangling.">⚡ Power Hazard (DISCOM)</button>
-          <button class="chip" data-query="I want to file a complaint with the Ministry of Magic about my wand registration.">🚫 Fake Ministry Test</button>
-        </div>
-
         <!-- Message Stream -->
         <div id="messages-container" class="messages-stream">
           <div class="message system-welcome">
             <div class="message-sender">Sahayta Navigator</div>
             <div class="message-content">
               <p>Namaste! I am <strong>Sahayta</strong>, an autonomous GovTech agent designed to help Indian citizens file formal complaints, resolve civic issues, and navigate public welfare schemes across Central and State portals.</p>
-              <p>Describe your issue in plain English, Hindi, or Hinglish. I will triage the right government authority, elicit any missing details, draft a formal petition, and execute the submission.</p>
+              <p>Describe your issue in plain English, Hindi, or Hinglish. You can type or use the <strong>Voice</strong> button to speak. I will triage the right government authority, elicit any missing details, draft a formal petition, and execute the submission.</p>
             </div>
           </div>
         </div>
@@ -59,7 +50,15 @@
         <!-- Input Area -->
         <form id="chat-form" class="chat-input-form">
           <div class="input-wrapper">
-            <textarea id="user-input" placeholder="Type your grievance here (e.g., cancelled train refund, ration denial, power outage)..." rows="2" required></textarea>
+            <textarea id="user-input" placeholder="Type or speak your grievance (e.g., cancelled train refund, ration denial, power outage)..." rows="2" required></textarea>
+            <button type="button" id="voice-btn" class="btn-voice" title="Voice Input (Speak in Hindi or English)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+              <span id="voice-label">Voice</span>
+            </button>
             <button type="submit" id="send-btn" class="btn-primary">
               <span>Send</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>

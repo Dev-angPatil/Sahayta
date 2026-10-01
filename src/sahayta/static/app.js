@@ -64,13 +64,73 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.getElementById('confirm-submit-btn');
   const newSessionBtn = document.getElementById('new-session-btn');
 
-  // Quick scenario chips
-  document.querySelectorAll('.chip').forEach((chip) => {
-    chip.addEventListener('click', () => {
-      userInput.value = chip.getAttribute('data-query');
-      userInput.focus();
+  // Voice Input Mode (Web Speech API)
+  const voiceBtn = document.getElementById('voice-btn');
+  const voiceLabel = document.getElementById('voice-label');
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    if (voiceBtn) {
+      voiceBtn.title = 'Speech recognition requires Chrome, Edge, or Safari';
+      voiceBtn.addEventListener('click', () => {
+        alert('Voice input requires a browser that supports the Web Speech API (such as Chrome, Edge, or Safari).');
+      });
+    }
+  } else if (voiceBtn) {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = 'hi-IN'; // Recognizes Hindi, Hinglish, and English
+    let isListening = false;
+
+    voiceBtn.addEventListener('click', () => {
+      if (isListening) {
+        recognition.stop();
+      } else {
+        try {
+          recognition.start();
+        } catch (err) {
+          console.warn('Speech recognition start error:', err);
+        }
+      }
     });
-  });
+
+    recognition.onstart = () => {
+      isListening = true;
+      voiceBtn.classList.add('listening');
+      if (voiceLabel) voiceLabel.textContent = 'Listening...';
+      userInput.placeholder = 'Listening... Speak in Hindi, English, or Hinglish...';
+    };
+
+    recognition.onresult = (event) => {
+      let transcript = '';
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        transcript += event.results[i][0].transcript;
+      }
+      if (transcript) {
+        userInput.value = transcript;
+      }
+    };
+
+    recognition.onerror = (event) => {
+      console.warn('Speech recognition error:', event.error);
+      resetVoice();
+    };
+
+    recognition.onend = () => {
+      resetVoice();
+      if (userInput.value.trim()) {
+        userInput.focus();
+      }
+    };
+
+    function resetVoice() {
+      isListening = false;
+      voiceBtn.classList.remove('listening');
+      if (voiceLabel) voiceLabel.textContent = 'Voice';
+      userInput.placeholder = 'Type or speak your grievance (e.g., cancelled train refund, ration denial, power outage)...';
+    }
+  }
 
   // Handle enter key in textarea
   userInput.addEventListener('keydown', (e) => {
