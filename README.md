@@ -1,115 +1,179 @@
-# 🇮🇳 Sahayta — Action-Oriented GovTech AI Agent for Bharat
+# Sahayta - Action-Oriented GovTech AI Agent for Bharat
 
-[![BharatAgentic Hackathon](https://img.shields.io/badge/BharatAgentic-aiKart%202026-orange.svg)](https://aikart.in)
-[![Category](https://img.shields.io/badge/Category-Citizen%20%26%20GovTech-blue.svg)](#)
-[![Python](https://img.shields.io/badge/Python-3.11%2B-brightgreen.svg)](#)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+Sahayta is an autonomous, action-oriented GovTech AI Agent designed to bridge the gap between Indian citizens and public grievance redressal mechanisms. Most conversational chatbots act as passive information directories, providing static links or hallucinating non-existent schemes and procedures. 
 
-> **"Identify a meaningful problem. Build an intelligent agent. Give it the ability to reason and act. Create measurable impact for Bharat."**
-
-**Sahayta** is an autonomous, action-oriented GovTech AI Agent built for the **BharatAgentic Hackathon (powered by aiKart)**. Moving beyond passive informational chatbots that merely provide web links, Sahayta understands unstructured citizen complaints in natural vernacular languages (English, Hindi, Hinglish), triages them into verified central and state portal schemas, interactively elicits missing particulars, synthesizes formal administrative petitions (compliant with Article 350 of the Constitution of India and DARPG standards), and automates filing with a Human-in-the-Loop confirmation gate.
+Sahayta functions as an active administrative and legal advocate:
+- Interprets unstructured grievances in vernacular languages (English, Hindi, and Hinglish).
+- Deterministically triages complaints to verified Central, State, and Municipal civic authorities.
+- Identifies missing statutory particulars and interactively elicits only mandatory information.
+- Synthesizes formal administrative petitions compliant with Article 350 of the Constitution of India and relevant statutory acts.
+- Enforces a strict Human-in-the-Loop confirmation gate before generating cryptographically verifiable SHA-256 submission receipts.
 
 ---
 
-## 🌟 Key Differentiators: Beyond Simple Chatbots
+## Comparison: Conversational Chatbots vs. Sahayta Agent
 
-| Dimension | Standard Chatbot | Sahayta GovTech Agent |
+| Dimension | Standard Chatbots | Sahayta GovTech Agent |
 |---|---|---|
-| **Action Capability** | Passive text output (*"Visit pgportal.gov.in"*) | Active execution: Triages, elicits gaps, formats petition, and generates verified filing payload |
-| **Hallucination Risk** | High: Inventing fake schemes, false tracking IDs, or wrong URLs | **Zero**: Strictly grounded against 56 Union Ministries and Pydantic v2 schemas (`extra='forbid'`) |
-| **Scam / Fraud Screening** | Vulnerable to user deception | Deterministic **Gate 0 screening**: Rejects pop-culture ministries, fake subsidies, and cyber scams |
-| **Administrative Quality** | Fragmented citizen text | Synthesizes formal administrative petitions with statutory citations (NFSA 2013, Electricity Act 2003) |
-| **Citizen Accountability** | None | Verifiable cryptographic filing receipt with SHA-256 integrity token and statutory deadlines |
+| Action Capability | Passive text responses ("Visit pgportal.gov.in") | Active execution: Triages, elicits gaps, drafts legal petitions, and executes filing payload |
+| Hallucination Risk | High: Inventing fake schemes, false tracking IDs, or ungrounded URLs | Zero: Grounded against 56 Union Ministries and Pydantic v2 strict schemas (`extra="forbid"`) |
+| Fraud & Scam Defense | Vulnerable to jailbreaks and deception | Deterministic Gate 0 screening: Rejects pop-culture schemes, fake subsidies, and cyber scams |
+| Administrative Quality | Fragmented citizen text | Synthesizes formal administrative petitions with statutory citations (NFSA 2013, Electricity Act 2003) |
+| Accountability | None | Verifiable cryptographic filing receipt with SHA-256 integrity token and statutory deadlines |
 
 ---
 
-## 🏛️ Supported Grounded Civic Portals
+## Agent Decision-Making Flowchart
 
-1. **CPGRAMS Central Public Grievance Portal (`GOVTECH_CPGRAMS_V1`)**
-   - *Authority:* Department of Administrative Reforms and Public Grievances (DARPG), Government of India.
-   - *Domains:* Railways (IRCTC refunds, PNR disputes), Telecom (DoT, BSNL, SIM fraud), Banking (DFS, SBI, public sector banks), Passport (MEA), Posts.
-   - *Statute:* Constitution of India (Article 350) & Citizen's Charter 60-day resolution standard.
+The following diagram illustrates how Sahayta processes citizen input, enforces security and regulatory guardrails, and drives the complaint from initial intake to verified filing:
 
-2. **State Public Distribution System (`STATE_PDS_V1`)**
-   - *Authority:* Department of Food, Civil Supplies & Consumer Affairs.
-   - *Domains:* Ration non-disbursal, ePoS biometric failures, dealer overcharging, delayed card modification.
-   - *Statute:* National Food Security Act (NFSA) 2013, Sections 15 & 16.
-
-3. **State Electricity Distribution Company (`DISCOM_POWER_V1`)**
-   - *Authority:* State Electricity Regulatory Commission (SERC) / DISCOM Consumer Forum.
-   - *Domains:* Prolonged outages, billing disputes, defective meters, hazardous infrastructure.
-   - *Statute:* Electricity Act 2003, Section 42(5) (CGRF Norms).
-
-4. **Municipal Water Supply & Sewerage Board (`MUNICIPAL_WATER_V1`)**
-   - *Authority:* Municipal Corporation / City Jal Board.
-   - *Domains:* Contaminated drinking water, supply failure, pipeline leakage, sewer overflows.
-   - *Statute:* Municipal Corporation Citizen's Charter for Potable Water Supply.
-
----
-
-## 🚀 Quick Start Guide
-
-> [!TIP]
-> **Zero API Key Dependency for Evaluation**: Sahayta is built on a dual-engine neuro-symbolic architecture. It works **100% autonomously out-of-the-box** using deterministic civic schemas, Gate 0 security, and Article 350 synthesis with **zero API keys required**. Evaluators can test the complete end-to-end agentic workflow instantly.
-
-### ⏱️ 30-Second Evaluation Guide for Hackathon Judges
-
-1. **Clone & Setup Environment:**
-   ```bash
-   git clone https://github.com/Dev-angPatil/Sahayta.git
-   cd Sahayta
-   python3 -m venv .venv
-   source .venv/bin/activate
-   pip install -r requirements.txt
-   pip install -e .
-   ```
-
-2. **Run Automated Test Suite (100% Offline, Zero Key Required):**
-   ```bash
-   pytest tests/ -v
-   # Result: 51 passed in <1s (100% pass rate)
-   ```
-
-3. **Launch Web Application & 1-Click Autonomous Demo:**
-   ```bash
-   uvicorn sahayta.api.app:app --host 0.0.0.0 --port 8000
-   ```
-   - Open **`http://localhost:8000`** in your browser.
-   - Click the **`▶ Auto Demo`** button in the top bar to watch the autonomous GovTech agent navigate the entire lifecycle (Intake → CPGRAMS Routing → Live Form Filling → Elicitation → Article 350 Legal Petition → Cryptographic SHA-256 Notarization).
-
-4. **(Optional) Configure Gemini 2.5 Flash:**
-   If you wish to test with Google Gemini 2.5 Flash cognitive reasoning:
-   ```bash
-   cp .env.example .env
-   # Add your GEMINI_API_KEY in .env
-   ```
+```mermaid
+flowchart TD
+    A[Citizen Input\nEnglish, Hindi, or Hinglish] --> B[Gate 0: Security & Jurisdiction Screener]
+    
+    B -->|Flagged as Scam, Fictitious Entity, or Out-of-Scope| C[Reject & Issue Consumer Protection Advisory\nHTTP 422 - Reference myscheme.gov.in]
+    B -->|Verified Legitimate Grievance| D[Domain & Authority Triage Engine]
+    
+    D --> E{Determine Statutory Jurisdiction}
+    E -->|Union Level| F1[CPGRAMS Gateway\n56 Whitelisted Central Ministries]
+    E -->|Food & Civil Supplies| F2[State PDS Portal\nNFSA 2013 Framework]
+    E -->|Power & Utilities| F3[State DISCOM Forum\nElectricity Act 2003 CGRF]
+    E -->|Urban Infrastructure| F4[Municipal Corporation\nCity Water & Sewerage Board]
+    
+    F1 --> G[Pydantic v2 Schema Validation\nextra='forbid']
+    F2 --> G
+    F3 --> G
+    F4 --> G
+    
+    G --> H{Are Mandatory Particulars Complete?}
+    H -->|Missing Required Fields| I[Dynamic Elicitation State Machine]
+    I --> J[Generate Single Focused Clarification Question]
+    J --> A
+    
+    H -->|All Mandatory Fields Present| K[Article 350 Administrative Petition Synthesizer]
+    K --> L[Generate Structured Legal Petition with Statutory Citations]
+    
+    L --> M{Human-in-the-Loop Confirmation Gate}
+    M -->|Citizen Requests Changes| N[Update Specific Fields] --> G
+    M -->|Citizen Rejects / Cancels| O[Abort Filing Session]
+    M -->|Citizen Confirms Petition| P[Verifiable Submission Engine]
+    
+    P --> Q[Generate Official Tracking ID & Statutory Deadlines]
+    Q --> R[Mint Immutable SHA-256 Integrity Receipt]
+```
 
 ---
 
-## 🐳 Running via Docker (Submission Method 1)
+## Agent Decision-Making Architecture
 
-Sahayta includes a production-ready, minimal Docker container:
+Sahayta's cognitive pipeline is built on a neuro-symbolic decision architecture where non-deterministic language understanding is strictly bounded by deterministic civic rules:
+
+1. **Gate 0 Security & Scam Screening**
+   - **Decision Rule**: Before any domain classification or LLM reasoning occurs, the input is screened against a deterministic catalog of known fraudulent schemes, fictitious government programs, and cyber scam patterns.
+   - **Action**: If a fictitious scheme or scam is detected (e.g., fraudulent subsidy programs or pop-culture ministries), execution halts immediately with an HTTP 422 response directing the user to official resources like `myscheme.gov.in` and `cybercrime.gov.in`.
+
+2. **Grounded Authority & Ministry Triage**
+   - **Decision Rule**: Grievances must map to a recognized public authority. Central grievances are matched against an exhaustive whitelist of 56 Union Ministries; utility grievances are routed to state and municipal tiers.
+   - **Action**: The system binds the grievance to a concrete schema (`GOVTECH_CPGRAMS_V1`, `STATE_PDS_V1`, `DISCOM_POWER_V1`, or `MUNICIPAL_WATER_V1`).
+
+3. **Schema Completeness & Targeted Elicitation**
+   - **Decision Rule**: The bound schema defines required statutory parameters (e.g., PNR number for railway refunds, consumer account number for power disputes, ration card ID for food supplies).
+   - **Action**: The state machine inspects extracted fields against schema requirements. If fields are missing, the agent does not overwhelm the citizen with a form; it enters an elicitation loop, asking one clear question in the citizen's chosen language to collect the missing data.
+
+4. **Constitutional & Statutory Petition Synthesis**
+   - **Decision Rule**: Complaints submitted to government portals must present a clear factual timeline, reference statutory obligations, and articulate a specific prayer for relief.
+   - **Action**: Under Article 350 of the Constitution of India, the agent synthesizes a formal petition incorporating the citizen's particulars, relevant statutes (e.g., National Food Security Act 2013, Electricity Act 2003, or Citizen's Charters), and official resolution timeframes.
+
+5. **Human-in-the-Loop Safety Gate**
+   - **Decision Rule**: An autonomous agent must never submit legal or administrative representations on behalf of a citizen without explicit citizen consent.
+   - **Action**: The drafted petition is presented to the citizen for review. Only upon explicit citizen confirmation does the filing engine execute.
+
+6. **Cryptographic Receipting**
+   - **Decision Rule**: Citizens need tamper-evident proof of filing for RTI follow-ups and statutory escalations.
+   - **Action**: The agent mints an official receipt containing the portal tracking reference, submission timestamp, statutory resolution deadline, and a SHA-256 payload digest.
+
+---
+
+## Supported Civic Portals & Grounded Authorities
+
+| Portal / Authority | Identifier | Statutory Framework | Covered Grievance Domains |
+|---|---|---|---|
+| CPGRAMS Central Grievance Portal | `GOVTECH_CPGRAMS_V1` | Article 350, DARPG 60-Day Charter | Railways (IRCTC, PNR), Telecom, Banking, Passports, Posts |
+| State Public Distribution System | `STATE_PDS_V1` | National Food Security Act (NFSA) 2013 | Ration non-disbursal, biometric ePoS failure, dealer overcharging |
+| State Electricity Distribution Co. | `DISCOM_POWER_V1` | Electricity Act 2003, Section 42(5) | Prolonged outages, defective meters, erroneous tariff billing |
+| Municipal Water Supply Board | `MUNICIPAL_WATER_V1` | Municipal Corporation Citizen's Charter | Contaminated drinking water, supply failure, pipeline leakage |
+
+---
+
+## Running with Docker
+
+Sahayta is published as a container image on Docker Hub:
+
+- **Docker Hub Repository**: [officialdevangpatil/Sahayta](https://hub.docker.com/r/officialdevangpatil/Sahayta)
 
 ```bash
-# Build the Docker image
-docker build -t sahayta-agent:latest .
+# Pull the image
+docker pull officialdevangpatil/Sahayta:latest
 
 # Run the container
-docker run -p 8000:8000 sahayta-agent:latest
+docker run -d -p 8000:8000 --name sahayta officialdevangpatil/Sahayta:latest
 
-# Verify health
+# Verify service health
 curl -f http://localhost:8000/health
 ```
 
+The web interface will be available at `http://localhost:8000`.
+
 ---
 
-## 🔌 API Reference & Usage (Submission Method 2)
+## Local Development & Setup
 
-### 1. Health Probe
+### Prerequisites
+- Python 3.11+
+- Virtual environment (`venv`)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Dev-angPatil/Sahayta.git
+cd Sahayta
+
+# Create and activate virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+pip install -e .
+```
+
+### Running Tests
+
+Run the offline test suite:
+
+```bash
+pytest tests/ -v
+```
+
+### Starting the Application
+
+```bash
+uvicorn sahayta.api.app:app --host 0.0.0.0 --port 8000
+```
+
+Open `http://localhost:8000` in your browser.
+
+---
+
+## API Reference
+
+### 1. Health Check (`GET /health`)
 ```bash
 curl -X GET http://localhost:8000/health
 ```
-**Response:**
+
+Response:
 ```json
 {
   "status": "healthy",
@@ -119,19 +183,20 @@ curl -X GET http://localhost:8000/health
 }
 ```
 
-### 2. Triage & Interactive Chat (`POST /api/v1/agent/chat`)
+### 2. Grievance Triage and Chat (`POST /api/v1/agent/chat`)
 ```bash
 curl -X POST http://localhost:8000/api/v1/agent/chat \
   -H "Content-Type: application/json" \
   -d '{
-    "session_id": "sess_demo_01",
+    "session_id": "session_001",
     "message": "IRCTC train 12952 was cancelled on 15 Sept, but my refund of Rs 2,450 has not been received after 16 days. PNR is 2458971234."
   }'
 ```
-**Response:**
+
+Response:
 ```json
 {
-  "session_id": "sess_demo_01",
+  "session_id": "session_001",
   "status": "ELICITING",
   "portal": "CPGRAMS",
   "schema_id": "GOVTECH_CPGRAMS_V1",
@@ -147,16 +212,17 @@ curl -X POST http://localhost:8000/api/v1/agent/chat \
 }
 ```
 
-### 3. Anti-Hallucination & Scam Rejection Example
+### 3. Scam and Fraud Screening Response (`POST /api/v1/agent/chat`)
 ```bash
 curl -X POST http://localhost:8000/api/v1/agent/chat \
   -H "Content-Type: application/json" \
   -d '{
-    "session_id": "sess_scam_01",
+    "session_id": "session_scam",
     "message": "How do I claim my 50000 rupees subsidy under PM Free Bitcoin Yojana?"
   }'
 ```
-**Response (HTTP 422 Unprocessable Entity):**
+
+Response (HTTP 422):
 ```json
 {
   "status": "REJECTED",
@@ -168,16 +234,17 @@ curl -X POST http://localhost:8000/api/v1/agent/chat \
 }
 ```
 
-### 4. Direct Filing Execution (`POST /api/v1/agent/submit`)
+### 4. Petition Submission (`POST /api/v1/agent/submit`)
 ```bash
 curl -X POST http://localhost:8000/api/v1/agent/submit \
   -H "Content-Type: application/json" \
   -d '{
-    "session_id": "sess_demo_01",
+    "session_id": "session_001",
     "citizen_confirmation": true
   }'
 ```
-**Response:**
+
+Response:
 ```json
 {
   "status": "SUBMITTED",
@@ -193,20 +260,15 @@ curl -X POST http://localhost:8000/api/v1/agent/submit \
 
 ---
 
-## 📦 Hackathon Submission Artifacts
+## Project Documentation
 
-1. **aiKart Agent Manifest (Method 1 — `aikart.dev/v1`):** [`agent_manifest.yaml`](./agent_manifest.yaml)
-2. **aiKart "Try Me Now" Sandbox Runner:**
-   ```bash
-   # Executes the headless agentic pipeline and produces /aikart/output.json
-   python -m sahayta.aikart_runner
-   ```
-3. **Container Dockerfile (Method 1):** [`Dockerfile`](./Dockerfile)
-4. **Interactive Swagger Docs (Method 2):** Accessible at `http://localhost:8000/docs`
-5. **Design System Specification:** [`DESIGN.md`](./DESIGN.md) (Curated Command Center design system imported via `designmd.ai`)
+- [VISION.md](VISION.md): Project vision, user personas, and target societal impact.
+- [ARCHITECTURE.md](ARCHITECTURE.md): Technical architecture, data models, and component boundaries.
+- [DESIGN.md](DESIGN.md): Visual design specifications and token guidelines.
+- [agent_manifest.yaml](agent_manifest.yaml): aiKart declarative agent manifest specification.
 
 ---
 
-## 📄 License
-This project is licensed under the Apache 2.0 License — see the [LICENSE](LICENSE) file for details.
+## License
 
+This project is licensed under the Apache 2.0 License. See [LICENSE](LICENSE) for details.
