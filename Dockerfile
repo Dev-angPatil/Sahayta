@@ -11,9 +11,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy build config and application source
-COPY pyproject.toml .
+# Copy build config, documentation, and application source
+COPY pyproject.toml README.md LICENSE ./
 COPY src/ /app/src/
+
+# Ensure aiKart sandbox execution directory exists
+RUN mkdir -p /aikart && chmod 777 /aikart
 
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
