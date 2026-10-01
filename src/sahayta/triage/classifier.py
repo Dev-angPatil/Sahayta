@@ -272,13 +272,16 @@ def extract_entities(text: str, domain: str = "CPGRAMS") -> Dict[str, Any]:
 
     # 8. Domain-Specific Entities
     if domain == "CPGRAMS":
-        pnr_match = re.search(r"\b(?:pnr|pnr\s+is)[\s\:\#\-]*([0-9]{10})\b", text, re.IGNORECASE)
+        pnr_match = re.search(r"\b(?:pnr|pnr\s+(?:is|hai|no|number))[\s\:\#\-]*([0-9]{10})\b", text, re.IGNORECASE)
         if pnr_match:
             entities["reference_number"] = pnr_match.group(1).strip()
         else:
-            bare_pnr = re.search(r"\b([0-9]{10})\b", text)
-            if bare_pnr and ("mobile_number" not in entities or bare_pnr.group(1) != entities["mobile_number"]):
-                entities["reference_number"] = bare_pnr.group(1).strip()
+            for bare_pnr_match in re.finditer(r"\b([0-9]{10})\b", text):
+                candidate = bare_pnr_match.group(1).strip()
+                if "mobile_number" in entities and candidate == entities["mobile_number"]:
+                    continue
+                entities["reference_number"] = candidate
+                break
 
         # Ministry assignment
         if re.search(r"\b(?:railway|train|irctc|pnr)\b", text, re.IGNORECASE):
@@ -339,16 +342,21 @@ def extract_entities(text: str, domain: str = "CPGRAMS") -> Dict[str, Any]:
                 entities["utility_provider"] = "BSES"
 
         ca_match = re.search(
-            r"(?:ca\s*(?:no|number|#)?|consumer\s*(?:account|no|number|#)?|account\s*(?:no|number|#)?)\s*[:\-]?\s*([0-9]{8,14})\b",
+            r"(?:ca\s*(?:no|number|#)?|consumer\s*(?:account|no|number|#)?|account\s*(?:no|number|#)?)\s*(?:is|hai|[:\-])?\s*([0-9]{8,14})\b",
             text,
             re.IGNORECASE,
         )
         if ca_match:
             entities["consumer_account_number"] = ca_match.group(1).strip()
         else:
-            bare_num = re.search(r"\b([0-9]{8,12})\b", text)
-            if bare_num and ("mobile_number" not in entities or bare_num.group(1) != entities["mobile_number"]):
-                entities["consumer_account_number"] = bare_num.group(1).strip()
+            for bare_ca_match in re.finditer(r"\b([0-9]{8,12})\b", text):
+                candidate = bare_ca_match.group(1).strip()
+                if "mobile_number" in entities and candidate == entities["mobile_number"]:
+                    continue
+                if "pincode" in entities and candidate == entities["pincode"]:
+                    continue
+                entities["consumer_account_number"] = candidate
+                break
 
         meter_match = re.search(
             r"(?:meter|mtr)\s*(?:no|number|#|serial)?\s*[:\-]?\s*([A-Za-z0-9\-\_]{3,20})\b",
