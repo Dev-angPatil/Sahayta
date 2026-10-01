@@ -67,17 +67,6 @@ Sahayta's cognitive pipeline is built on a neuro-symbolic decision architecture 
 
 ---
 
-## Supported Civic Portals & Grounded Authorities
-
-| Portal / Authority | Identifier | Statutory Framework | Covered Grievance Domains |
-|---|---|---|---|
-| CPGRAMS Central Grievance Portal | `GOVTECH_CPGRAMS_V1` | Article 350, DARPG 60-Day Charter | Railways (IRCTC, PNR), Telecom, Banking, Passports, Posts |
-| State Public Distribution System | `STATE_PDS_V1` | National Food Security Act (NFSA) 2013 | Ration non-disbursal, biometric ePoS failure, dealer overcharging |
-| State Electricity Distribution Co. | `DISCOM_POWER_V1` | Electricity Act 2003, Section 42(5) | Prolonged outages, defective meters, erroneous tariff billing |
-| Municipal Water Supply Board | `MUNICIPAL_WATER_V1` | Municipal Corporation Citizen's Charter | Contaminated drinking water, supply failure, pipeline leakage |
-
----
-
 ## Running with Docker
 
 Sahayta is published as a container image on Docker Hub:
